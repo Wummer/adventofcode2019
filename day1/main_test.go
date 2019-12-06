@@ -1,10 +1,32 @@
 package day1
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"os"
+	"strconv"
 	"testing"
 )
+
+func TestFinalSolution(t *testing.T) {
+	var fuelCounter FuelCounter
+	expected := 9769030
+	f, err := os.Open("input")
+	require.NoError(t, err)
+	scanner := bufio.NewScanner(f)
+
+	var mass int
+	for scanner.Scan() {
+		mass, err = strconv.Atoi(scanner.Text())
+		fuelCounter.Add(mass)
+
+		require.NoError(t, err)
+	}
+
+	assert.Equal(t, expected, fuelCounter.count)
+}
 
 func TestAdd(t *testing.T) {
 	fuelCounter := FuelCounter{}
