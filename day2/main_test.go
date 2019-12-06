@@ -5,31 +5,23 @@ import (
 	"testing"
 )
 
-func Test(t *testing.T) {
-	input := []int{1, 0, 0, 0, 99}
-	expected := []int{2, 0, 0, 0, 99}
-
-	assert.Equal(t, expected, parseIntcode(input))
-}
-
-func Test2(t *testing.T) {
-	input := []int{2, 3, 0, 3, 99}
-	expected := []int{2, 3, 0, 6, 99}
-
-	assert.Equal(t, expected, parseIntcode(input))
-}
-
-func Test3(t *testing.T) {
-	input := []int{2, 4, 4, 5, 99, 0}
-	expected := []int{2, 4, 4, 5, 99, 9801}
-
-	assert.Equal(t, expected, parseIntcode(input))
-}
-
-func Test4(t *testing.T) {
-	input := []int{1, 1, 1, 4, 99, 5, 6, 0, 99}
-	expected := []int{30, 1, 1, 4, 2, 5, 6, 0, 99}
-	assert.Equal(t, expected, parseIntcode(input))
+func TestParseIntcode(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []int
+		expected []int
+	}{
+		{"Case1", []int{1, 0, 0, 0, 99}, []int{2, 0, 0, 0, 99}},
+		{"Case2", []int{2, 3, 0, 3, 99}, []int{2, 3, 0, 6, 99}},
+		{"Case3", []int{2, 4, 4, 5, 99, 0}, []int{2, 4, 4, 5, 99, 9801}},
+		{"Case4", []int{1, 1, 1, 4, 99, 5, 6, 0, 99}, []int{30, 1, 1, 4, 2, 5, 6, 0, 99}},
+	}
+	t.Parallel()
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			assert.Equal(t, test.expected, parseIntcode(test.input))
+		})
+	}
 }
 
 func TestSolution(t *testing.T) {
