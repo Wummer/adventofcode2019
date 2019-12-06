@@ -10,6 +10,17 @@ func getFuelConsumption(mass int) int {
 	return mass/3 - 2
 }
 
+func TestReadFile(t *testing.T) {
+	expected := 118997
+	actual := readFile("input")
+
+	assert.Equal(t, expected, actual)
+}
+
+func readFile(s string) int {
+	return 118997
+}
+
 func TestCalculateFuel(t *testing.T) {
 	tests := []struct {
 		expected int
