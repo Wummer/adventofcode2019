@@ -10,15 +10,16 @@ func getFuelConsumption(mass int) int {
 	return mass/3 - 2
 }
 
-func TestReadFile(t *testing.T) {
-	expected := 118997
-	actual := readFile("input")
+func TestSumFuel(t *testing.T) {
+	expected := 4
+	actual := getFuelSum(2, 2)
 
 	assert.Equal(t, expected, actual)
 }
 
-func readFile(s string) int {
-	return 118997
+func getFuelSum(x int, y int) int {
+	return x + y
+
 }
 
 func TestCalculateFuel(t *testing.T) {
@@ -31,6 +32,7 @@ func TestCalculateFuel(t *testing.T) {
 		{expected: 654, mass: 1969},
 		{expected: 33583, mass: 100756},
 	}
+	t.Parallel()
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("Mass %v", test.mass), func(t *testing.T) {
 			assert.Equal(t, test.expected, getFuelConsumption(test.mass))
