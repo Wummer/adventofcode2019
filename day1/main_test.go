@@ -6,23 +6,26 @@ import (
 	"testing"
 )
 
+type FuelCounter struct {
+	count int
+}
+
+func (fc FuelCounter) Add(i int) int {
+	return fc.count + 2
+}
+
+func TestAdd(t *testing.T) {
+	expected := 2
+	fuelCounter := FuelCounter{}
+
+	assert.Equal(t, expected, fuelCounter.Add(2))
+}
+
 func getFuelConsumption(mass int) int {
 	return mass/3 - 2
 }
 
-func TestSumFuel(t *testing.T) {
-	expected := 4
-	actual := getFuelSum(2, 2)
-
-	assert.Equal(t, expected, actual)
-}
-
-func getFuelSum(x int, y int) int {
-	return x + y
-
-}
-
-func TestCalculateFuel(t *testing.T) {
+func TestCalculateFuelConsumption(t *testing.T) {
 	tests := []struct {
 		expected int
 		mass     int
