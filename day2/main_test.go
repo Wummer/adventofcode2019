@@ -9,10 +9,14 @@ func Test(t *testing.T) {
 	input := []int{1, 0, 0, 0, 99}
 	expected := []int{2, 0, 0, 0, 99}
 
-	assert.Equal(t, expected, intcode(input))
+	assert.Equal(t, expected, parseIntcode(input))
 }
 
-func intcode(input []int) []int {
-	return []int{}
+func parseIntcode(input []int) []int {
+	result := input
+
+	result[0] = input[input[1]] + input[input[2]]
+
+	return result
 
 }
