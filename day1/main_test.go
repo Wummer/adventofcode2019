@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func TestSolution(t *testing.T) {
+func TestSolution1(t *testing.T) {
 	var fuelCounter FuelCounter
 	expected := 3256114
 	f, err := os.Open("input")
@@ -21,6 +21,24 @@ func TestSolution(t *testing.T) {
 	for scanner.Scan() {
 		mass, err = strconv.Atoi(scanner.Text())
 		fuelCounter.Add(getFuelConsumption(mass))
+
+		require.NoError(t, err)
+	}
+
+	assert.Equal(t, expected, fuelCounter.count)
+}
+
+func TestSolution2(t *testing.T) {
+	var fuelCounter FuelCounter
+	expected := 4881302
+	f, err := os.Open("input")
+	require.NoError(t, err)
+	scanner := bufio.NewScanner(f)
+
+	var mass int
+	for scanner.Scan() {
+		mass, err = strconv.Atoi(scanner.Text())
+		fuelCounter.Add(fuelOfFuel(mass))
 
 		require.NoError(t, err)
 	}
