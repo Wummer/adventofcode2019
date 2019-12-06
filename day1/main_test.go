@@ -63,3 +63,33 @@ func TestCalculateFuelConsumption(t *testing.T) {
 		})
 	}
 }
+
+func TestFuelConsumptionOfFuel(t *testing.T) {
+	tests := []struct {
+		initialMass int
+		expected    int
+	}{
+		{14, 2},
+		{1969, 966},
+		{100756, 50346},
+	}
+	for _, test := range tests {
+		t.Run("", func(t *testing.T) {
+			assert.Equal(t, test.expected, fuelOfFuel(test.initialMass))
+		})
+	}
+}
+
+func fuelOfFuel(mass int) int {
+	result := 0
+	for {
+		mass = getFuelConsumption(mass)
+
+		if mass > 0 {
+			result += mass
+		} else {
+			break
+		}
+	}
+	return result
+}
