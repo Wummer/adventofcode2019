@@ -18,6 +18,7 @@ func TestCalculateFuel(t *testing.T) {
 		{expected: 2, mass: 12},
 		{expected: 2, mass: 14},
 		{expected: 654, mass: 1969},
+		{expected: 33583, mass: 100756},
 	}
 	for _, test := range tests {
 		t.Run(fmt.Sprintf("Mass %v", test.mass), func(t *testing.T) {
