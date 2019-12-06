@@ -15,14 +15,6 @@ func (fc *FuelCounter) Add(i int) {
 }
 
 func TestAdd(t *testing.T) {
-	expected := 2
-	fuelCounter := FuelCounter{}
-	fuelCounter.Add(2)
-
-	assert.Equal(t, expected, fuelCounter.count)
-}
-
-func TestAddTable(t *testing.T) {
 	fuelCounter := FuelCounter{}
 	tests := []struct {
 		input    int
