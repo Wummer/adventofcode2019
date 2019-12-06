@@ -10,9 +10,9 @@ import (
 	"testing"
 )
 
-func TestFinalSolution(t *testing.T) {
+func TestSolution(t *testing.T) {
 	var fuelCounter FuelCounter
-	expected := 9769030
+	expected := 3256114
 	f, err := os.Open("input")
 	require.NoError(t, err)
 	scanner := bufio.NewScanner(f)
@@ -20,7 +20,7 @@ func TestFinalSolution(t *testing.T) {
 	var mass int
 	for scanner.Scan() {
 		mass, err = strconv.Atoi(scanner.Text())
-		fuelCounter.Add(mass)
+		fuelCounter.Add(getFuelConsumption(mass))
 
 		require.NoError(t, err)
 	}
