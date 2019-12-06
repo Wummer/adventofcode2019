@@ -10,8 +10,9 @@ type FuelCounter struct {
 	count int
 }
 
-func (fc FuelCounter) Add(i int) int {
-	return fc.count + 2
+func (fc *FuelCounter) Add(i int) int {
+	fc.count += i
+	return fc.count
 }
 
 func TestAdd(t *testing.T) {
@@ -19,6 +20,22 @@ func TestAdd(t *testing.T) {
 	fuelCounter := FuelCounter{}
 
 	assert.Equal(t, expected, fuelCounter.Add(2))
+}
+
+func TestAddTable(t *testing.T) {
+	fuelCounter := FuelCounter{}
+	tests := []struct {
+		input    int
+		expected int
+	}{
+		{input: 2, expected: 2},
+		{input: 2, expected: 4},
+	}
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("Adding %d", test.input), func(t *testing.T) {
+			assert.Equal(t, test.expected, fuelCounter.Add(test.input))
+		})
+	}
 }
 
 func getFuelConsumption(mass int) int {
