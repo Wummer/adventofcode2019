@@ -15,3 +15,10 @@ func parseIntcode(input []int) []int {
 	return input
 
 }
+
+func swapValues(input []int, pos1, pos2 int) []int {
+	result := input
+	result[1] = pos1
+	result[2] = pos2
+	return result
+}
