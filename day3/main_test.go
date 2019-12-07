@@ -14,21 +14,22 @@ func TestManhattan(t *testing.T) {
 	end := [2]int{0, 4}
 	var actual int
 	actual = ManhattanDistance(start, end)
+
 	assert.Equal(t, expected, actual)
 }
 
 func TestParsePath(t *testing.T) {
 	expected := [2]int{75, 0}
-	start := [2]int{0, 0}
 	input := "R75"
-	actual, err := ParsePath(start, input)
+	actual, err := ParsePath(input)
 	require.NoError(t, err)
 
 	assert.Equal(t, expected, actual)
-
 }
 
-func ParsePath(start [2]int, input string) ([2]int, error) {
+func ParsePath(input string) ([2]int, error) {
+	start := [2]int{0, 0}
+
 	if input[0] == 'R' {
 		num, err := strconv.Atoi(input[1:])
 		if err != nil {
@@ -38,7 +39,6 @@ func ParsePath(start [2]int, input string) ([2]int, error) {
 
 	}
 	return start, nil
-
 }
 
 func ManhattanDistance(x [2]int, y [2]int) int {
