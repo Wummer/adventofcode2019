@@ -19,7 +19,7 @@ func TestParseIntcode(t *testing.T) {
 	t.Parallel()
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			assert.Equal(t, test.expected, parseIntcode(test.input))
+			assert.Equal(t, test.expected, parseIntcode(test.input, 1))
 		})
 	}
 }
