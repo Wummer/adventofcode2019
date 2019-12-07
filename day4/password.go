@@ -8,7 +8,16 @@ import (
 func CountCombinations(lower int, upper int) int {
 	count := 0
 	for i := lower; i < upper; i++ {
-		if hasDouble(i) && isNotDecreasing(i) {
+		if containsDouble(i) && isNotDecreasing(i) {
+			count++
+		}
+	}
+	return count
+}
+func CountCombinationsStrict(lower int, upper int) int {
+	count := 0
+	for i := lower; i < upper; i++ {
+		if containsStrictDouble(i) && isNotDecreasing(i) {
 			count++
 		}
 	}
@@ -26,7 +35,7 @@ func isNotDecreasing(input int) bool {
 	return true
 }
 
-func hasDouble(input int) bool {
+func containsDouble(input int) bool {
 	stringInput := fmt.Sprintf("%d", input)
 	previous := stringInput[0]
 	for i := 1; i < len(stringInput); i++ {
@@ -36,4 +45,24 @@ func hasDouble(input int) bool {
 		previous = stringInput[i]
 	}
 	return false
+}
+
+func containsStrictDouble(input int) bool {
+	stringInput := fmt.Sprintf("%d", input)
+	previous := stringInput[0]
+	groupCount := 1
+	hasDouble := false
+	for i := 1; i < len(stringInput); i++ {
+		if stringInput[i] == previous {
+			groupCount++
+
+		} else {
+			if groupCount == 2 {
+				hasDouble = true
+			}
+			groupCount = 1
+		}
+		previous = stringInput[i]
+	}
+	return hasDouble || groupCount == 2
 }
