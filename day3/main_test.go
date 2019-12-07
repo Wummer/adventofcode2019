@@ -2,61 +2,45 @@ package day3
 
 import (
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-	"math"
-	"strconv"
 	"testing"
 )
 
-func TestManhattan(t *testing.T) {
-	expected := 4
-	start := [2]int{0, 0}
-	end := [2]int{0, 4}
-	var actual int
-	actual = ManhattanDistance(start, end)
-
-	assert.Equal(t, expected, actual)
-}
-
-func TestParsePath(t *testing.T) {
+func TestEnd2End(t *testing.T) {
 	tests := []struct {
-		input    string
-		expected [2]int
+		wire1Path string
+		name      string
+		wire2Path string
+		expected  int
 	}{
-		{"R75", [2]int{75, 0}},
+		{"Example1", "R75,D30,R83,U83,L12,D49,R71,U7,L72", "U62,R66,U55,R34,D71,R55,D58,R83", 159},
+		{"Example2", "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51", "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7", 135},
 	}
 	for _, test := range tests {
-		t.Run(test.input, func(t *testing.T) {
-			actual, err := ParsePath(test.input)
-			require.NoError(t, err)
+		t.Run(test.name, func(t *testing.T) {
+			coordinatesWire1 := FindCoordinates(test.wire1Path)
+			t.Log(coordinatesWire1)
+			coordinatesWire2 := FindCoordinates(test.wire2Path)
+			t.Log(coordinatesWire2)
+
+			actual := CalculateClosestIntersection(coordinatesWire1, coordinatesWire2)
 			assert.Equal(t, test.expected, actual)
 		})
 	}
 }
 
-func ParsePath(input string) ([2]int, error) {
-	start := [2]int{0, 0}
-	if input[0] == 'R' {
-		x, err := strconv.Atoi(input[1:])
-		if err != nil {
-			return [2]int{0, 0}, err
-		}
-		start[0] += x
+func TestManhattan(t *testing.T) {
+	expected := 4
+	end := [2]int{0, 4}
+	var actual int
+	actual = ManhattanDistance(end)
 
-	} else if input[0] == 'L' {
-		x, err := strconv.Atoi(input[1:])
-		if err != nil {
-			return [2]int{0, 0}, err
-		}
-		start[0] -= x
-	}
-	return start, nil
+	assert.Equal(t, expected, actual)
 }
 
-func ManhattanDistance(x [2]int, y [2]int) int {
-	result := 0.
-	for i := 0; i < 2; i++ {
-		result += math.Abs(float64(x[i]) - float64(y[i]))
-	}
-	return int(result)
+func TestDrawPath(t *testing.T) {
+	expected := [][2]int{{0, 0}, {1, 0}, {2, 0}}
+	input := "R2"
+
+	actual := DrawPath([2]int{0, 0}, input)
+	assert.Equal(t, expected, actual)
 }
