@@ -21,12 +21,49 @@ func TestSolution1(t *testing.T) {
 	assert.Equal(t, expected, total)
 }
 
+func TestSolution2(t *testing.T) {
+	orbits, err := readFile("input")
+	require.NoError(t, err)
+
+	actual, ok := shortestTransfer("YOU", "SAN", orbits)
+	require.True(t, ok)
+	assert.Equal(t, 0, actual)
+}
+
+func traverse(from string, orbits map[string]string) []string {
+	if next, ok := orbits[from]; ok {
+		return append([]string{from}, traverse(next, orbits)...)
+	} else {
+		return []string{from}
+	}
+}
+
 func getOrbits(key string, orbits map[string]string) int {
 	val, ok := orbits[key]
 	if !ok {
 		return 0
 	}
 	return getOrbits(val, orbits) + 1
+}
+
+func shortestTransfer(you string, san string, orbits map[string]string) (int, bool) {
+	pathYou := traverse(you, orbits)
+	pathSan := traverse(san, orbits)
+	for i, node := range pathSan {
+		if length, ok := getIndex(node, pathYou); ok {
+			return length + i - 2, true
+		}
+	}
+	return 0, false
+}
+
+func getIndex(element string, data []string) (int, bool) {
+	for index, value := range data {
+		if element == value {
+			return index, true
+		}
+	}
+	return 0, false
 }
 
 func readFile(fileName string) (map[string]string, error) {
