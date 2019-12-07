@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func CalculateClosestIntersection(wire1 [][2]int, wire2 [][2]int) int {
+func ClosestIntersection(wire1 [][2]int, wire2 [][2]int) int {
 	var intersections [][2]int
 	for _, cWire1 := range wire1 {
 		for _, cWire2 := range wire2 {
@@ -41,7 +41,7 @@ func FindCoordinates(input string) [][2]int {
 }
 
 func ManhattanDistance(y [2]int) int {
-	return int(math.Abs(float64(y[0]) + math.Abs(float64(y[1]))))
+	return int(math.Abs(float64(y[0])) + math.Abs(float64(y[1])))
 }
 
 func DrawPath(start [2]int, input string) [][2]int {
