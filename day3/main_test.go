@@ -19,24 +19,36 @@ func TestManhattan(t *testing.T) {
 }
 
 func TestParsePath(t *testing.T) {
-	expected := [2]int{75, 0}
-	input := "R75"
-	actual, err := ParsePath(input)
-	require.NoError(t, err)
-
-	assert.Equal(t, expected, actual)
+	tests := []struct {
+		input    string
+		expected [2]int
+	}{
+		{"R75", [2]int{75, 0}},
+	}
+	for _, test := range tests {
+		t.Run(test.input, func(t *testing.T) {
+			actual, err := ParsePath(test.input)
+			require.NoError(t, err)
+			assert.Equal(t, test.expected, actual)
+		})
+	}
 }
 
 func ParsePath(input string) ([2]int, error) {
 	start := [2]int{0, 0}
-
 	if input[0] == 'R' {
-		num, err := strconv.Atoi(input[1:])
+		x, err := strconv.Atoi(input[1:])
 		if err != nil {
 			return [2]int{0, 0}, err
 		}
-		start[0] = num
+		start[0] += x
 
+	} else if input[0] == 'L' {
+		x, err := strconv.Atoi(input[1:])
+		if err != nil {
+			return [2]int{0, 0}, err
+		}
+		start[0] -= x
 	}
 	return start, nil
 }
